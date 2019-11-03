@@ -1,7 +1,13 @@
 # http-monitor
 This is a spring boot application.
 ## how to run
-Following is the command to run the console application.
+Using `Clone or download` button, first download (`Download ZIP`) the repo locally.
+Unzip this project into some folder.
+* Open the terminal window, and go to the project folder.
+* Run `mvn clean install` to build the project. This will also run the test cases.
+
+Now, from the project home folder in the terminal window, you can run the 
+following command:
 ```
 java -jar target/http-monitor-0.0.1-SNAPSHOT.jar sample_csv.txt
 ```
