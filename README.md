@@ -11,6 +11,9 @@ following command:
 ```
 java -jar target/http-monitor-0.0.1-SNAPSHOT.jar sample_csv.txt
 ```
+
+You can do `ctrl C` to finally exit the program.
+
 * `sample_csv.txt` is the file that contains all of the log data
 
 * application.properties file:
