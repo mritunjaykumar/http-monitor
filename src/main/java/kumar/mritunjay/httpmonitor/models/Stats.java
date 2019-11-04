@@ -2,12 +2,15 @@ package kumar.mritunjay.httpmonitor.models;
 
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class Stats {
+    private static String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
     // A bucket to gather the stats
     private int timeBucketDurationInSeconds;
 
@@ -102,6 +105,8 @@ public class Stats {
 
     private void addStatsToTheStatsQueue() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Stats for start time: [" + convertEpochToDateString(bucketStartTime) +
+                "] and end time: [" + convertEpochToDateString(bucketEndTime) + "] \n");
         sb.append("Total traffic volume or message count is [" + trafficVolume + "]\n");
         sb.append("Section with most hits is [" +
                 biggestHitCountSection +
@@ -113,6 +118,7 @@ public class Stats {
             sb.append("\tsection [" + section + "] : hit-count [" + sectionHitCountMap.get(section) + "]\n");
         }
 
+        sb.append("\n");
         statsQueue.addLast(sb.toString());
     }
 
@@ -126,5 +132,13 @@ public class Stats {
     private long calculateMonitorStartTime(long date) {
         long offset = date % ((long) timeBucketDurationInSeconds);
         return date - offset;
+    }
+
+    // TODO: This is a duplicate code. As an improvement, I can put this in some common util library.
+    // But, leaving this dup code as it is for now.
+    private String convertEpochToDateString(long epochTime) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+        return simpleDateFormat.format(new Date(epochTime * 1000)); // Convert Date's parameter from sec to milli sec.
     }
 }
